@@ -1,0 +1,25 @@
+*{
+    margin: 0;
+    padding:0;
+    border: 0;
+     outline: red solid 2px;
+}
+
+header{
+    vertical-align: baseline;
+    text-align: center;
+    background-image: linear-gradient(rgb(11, 26, 189),rgb(5, 97, 196));
+    padding: 30px;
+   
+}
+
+.form{
+   display: flex;
+   flex-direction: column;
+}
+
+#search-input{
+    height: 1.5rem;
+    background-color:rgb(240, 254, 255);
+}
+

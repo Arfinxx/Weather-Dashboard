@@ -18,19 +18,37 @@ fetch(queryURL)
 var dt = data.list[0].dt;
 var currentDate = new Date(dt*1000);
 var cityAndDate = $("<h2>").text(data.city.name + " (" + currentDate.toLocaleDateString('en-US')+ ")");
-// var currentDate = $("<h2>").text();
 $("#today").append(cityAndDate);
 
 // An icon representation of weather conditions
+var iconDiv = $("<div>").attr("id", "icon");
+var iconImg = $("<img>").attr({ 
+    "id": "today-icon", 
+    "src": "", 
+    "alt": "Weather icon"});
+
+var iconEl = iconDiv.append(iconImg);
+
 var iconCode = data.list[0].weather[0].icon;
 var iconURL = "http://openweathermap.org/img/w/" + iconCode + ".png";
-$("#today-icon").attr("src", iconURL)
+iconImg.attr("src", iconURL);
 
-
+$("#today").append(iconEl);
 
 // The temperature
-// The humidity
+var tempC = (data.list[0].main.temp - 273.15).toFixed(2);
+var tempCH3 = $("<h3>").text("Temp: " + tempC.toString() + " °C").attr("style", "padding-top: 15px;");
+$("#today").append(tempCH3);
+
 // The wind speed
+var WindSp = $("<h3>").text("Wind: " + data.list[0].wind.speed + " KPH");
+$("#today").append(WindSp);
+
+// The humidity
+
+var humid = $("<h3>").text("Humidity: " + data.list[0].main.humidity + " %");
+$("#today").append(humid);
+
 })
 
 // When a user view future weather conditions for that city they are presented with a 5-day forecast that displays:

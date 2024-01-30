@@ -5,6 +5,15 @@
      outline: red solid 2px;
 }
 
+h2{
+    font-weight: bolder;
+}
+
+h3{
+    font-size:large;
+    font-weight: 400;
+}
+
 header{
     vertical-align: baseline;
     text-align: center;
@@ -28,9 +37,8 @@ header{
 }
 
 #today{
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: left;
+    outline:black solid 1px;
+    padding: 20px;
 }
 
 #today-icon{

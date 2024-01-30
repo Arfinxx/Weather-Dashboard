@@ -2,21 +2,25 @@
 
 cities = ["London"];
 selectedCity = cities[0]
-
+var invalidCity = false;
 //fetch data using API
 var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + selectedCity + "&cnt=50&appid=adafafa7b4ca2fd642e72286f02918a6";
 
 function SearchForecast(){
 fetch(queryURL)
 .then(function (response) {
-    return response.json();
+     return response.json();
 }).then(function (data) {
-    
+        
+    if(data.message === "city not found"){alert("City is not Found. Please enter another city name."); return}else{
+        
+
     console.log(data)
     
     $("#today").empty();
     $("#forecast").empty();
-    
+
+
     // When a user views the current weather conditions for that city they are presented with:
     // The city name
     // The date
@@ -128,39 +132,62 @@ fetch(queryURL)
                 
             }  
             $("#forecast").append(cardGroup);
-        })        
+}})        
 }
 SearchForecast();
 
  // The city is added to the search history
 function CreateHistoryButton () {
-     
+    fetch(queryURL)
+.then(function (response) {
+    return response.json();
+}).then(function (data) {
+
+    if(data.message === "city not found"){return}else{
      $("#history").empty();
-     for (var i = 0; i < cities.length; i++){
-         
+     for (var i = 0; i < cities.length; i++){ 
+
          // creating button and adding class "history-city"
-         var a = $("<button>").addClass("history-city btn btn-secondary").attr("data-name", cities[i]);
+         var a = $("<button>").addClass("history-city btn btn-secondary").attr({"data-name": cities[i],
+                                                                                "style": "margin-top: 10px;"});
          // adding Button text
          a.text(cities[i])
          // Appending the button to history div
          $("#history").append(a);
-     }
- }
-
+     }}
+ })}
 
  // Submit Button
  var submitButton = $("#search-button");
- var searchQuery = "";
- submitButton.on("click", function(event){
-     event.preventDefault();
+ var searchQuery = ""; 
+
+ fetch(queryURL)
+.then(function (response) {
+return response.json();
+}).then(function (data) {
+ 
+ 
+submitButton.on("click", function(event){
+ event.preventDefault();
+   
+
+    if(data.message === "city not found"){return}else{
      var searchQuery = $("#search-input").val().trim();
-     cities.push(searchQuery);
+     cities.push(searchQuery);}
      selectedCity = cities[cities.length-1]
      queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + selectedCity + "&cnt=50&appid=adafafa7b4ca2fd642e72286f02918a6";
+     
+     localStorage.setItem("cities-stored", JSON.stringify(cities));
+     var citiesStored = JSON.parse(localStorage.getItem("cities-stored"));
+     console.log("LocalStorage Cities:")
+     console.log(citiesStored);
+
      SearchForecast();
-     CreateHistoryButton ()
- })
- 
+
+     CreateHistoryButton ();
+     
+    })
+})
  // When a user click on a city in the search history they are again presented with current and future conditions for that city
  
  $("#history").on("click", "button", function(event){
@@ -172,4 +199,4 @@ function CreateHistoryButton () {
      
  } )
  
- CreateHistoryButton ()
+ CreateHistoryButton ();

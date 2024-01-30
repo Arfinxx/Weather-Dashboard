@@ -33,6 +33,7 @@ aside{
 #search-input{
     height: 1.5rem;
     background-color:rgb(240, 254, 255);
+    text-indent: 5px;
 }
 
 #search-button{

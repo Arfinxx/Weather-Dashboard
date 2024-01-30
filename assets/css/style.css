@@ -8,7 +8,7 @@
 header{
     vertical-align: baseline;
     text-align: center;
-    background-image: linear-gradient(rgb(11, 26, 189),rgb(5, 97, 196));
+    background-image: linear-gradient(rgb(41, 78, 201),rgb(5, 84, 169));
     padding: 30px;
    
 }
@@ -25,5 +25,15 @@ header{
 
 #search-button{
     margin-top: 10px;
+}
+
+#today{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: left;
+}
+
+#today-icon{
+    padding-left: 10px;
 }
 

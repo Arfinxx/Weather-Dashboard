@@ -13,7 +13,8 @@ To use the Weather Dashboard:
 3. The 5 day weather forecast will be displayed on the screen.
 4. You can search further or use the "history" buttons to make previous city results reappear.
 
-![Weather Dashboard Demo](/assets/video/Weather%20Dashboard.webm)
+
+[Weather Dashboard.webm](https://github.com/Arfinxx/Weather-Dashboard/assets/152035571/1e7fd33a-6555-4c32-9cc9-57db88d9381d)
 
 
 ## License

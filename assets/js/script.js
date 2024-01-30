@@ -1,13 +1,12 @@
 // When a user searches for a city they are presented with current and future conditions for that city.
 
 cities = ["London"];
+selectedCity = cities[0]
 
-CreateHistoryButton ()
 //fetch data using API
+var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + selectedCity + "&cnt=50&appid=adafafa7b4ca2fd642e72286f02918a6";
 
-
-var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cities + "&cnt=50&appid=adafafa7b4ca2fd642e72286f02918a6";
-
+function SearchForecast(){
 fetch(queryURL)
 .then(function (response) {
     return response.json();
@@ -15,6 +14,8 @@ fetch(queryURL)
     
     console.log(data)
     
+    $("#today").empty();
+    $("#forecast").empty();
     
     // When a user views the current weather conditions for that city they are presented with:
     // The city name
@@ -124,42 +125,51 @@ fetch(queryURL)
                 
                 i = i+8;
                 
-                console.log(i);
                 
             }  
             $("#forecast").append(cardGroup);
-        })
-        
-        
-        
-        // })
-        // The city is added to the search history
-        function CreateHistoryButton () {
-            
-            $("#history").empty();
+        })        
+}
+SearchForecast();
 
-            for (var i = 0; i < cities.length; i++){
-                
-                // creating button and adding class "history-city"
-                var a = $("<button>").addClass("history-city btn btn-secondary");
-                // adding Button text
-                a.text(cities[i])
-                // Appending the button to history div
-                $("#history").append(a);
-            }
-        }
+ // The city is added to the search history
+function CreateHistoryButton () {
+     
+     $("#history").empty();
+     for (var i = 0; i < cities.length; i++){
+         
+         // creating button and adding class "history-city"
+         var a = $("<button>").addClass("history-city btn btn-secondary").attr("data-name", cities[i]);
+         // adding Button text
+         a.text(cities[i])
+         // Appending the button to history div
+         $("#history").append(a);
+     }
+ }
 
 
-        // Submit Button
-        var submitButton = $("#search-button");
-        var searchQuery = "";
-        submitButton.on("click", function(event){
-            event.preventDefault();
-            var searchQuery = $("#search-input").val().trim();
-            cities.push(searchQuery);
-            console.log(cities);
-
-            CreateHistoryButton ()
-            })
-        
-    // When a user click on a city in the search history they are again presented with current and future conditions for that city
+ // Submit Button
+ var submitButton = $("#search-button");
+ var searchQuery = "";
+ submitButton.on("click", function(event){
+     event.preventDefault();
+     var searchQuery = $("#search-input").val().trim();
+     cities.push(searchQuery);
+     selectedCity = cities[cities.length-1]
+     queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + selectedCity + "&cnt=50&appid=adafafa7b4ca2fd642e72286f02918a6";
+     SearchForecast();
+     CreateHistoryButton ()
+ })
+ 
+ // When a user click on a city in the search history they are again presented with current and future conditions for that city
+ 
+ $("#history").on("click", "button", function(event){
+     event.preventDefault();
+     
+     selectedCity = this.getAttribute("data-name");
+     queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + selectedCity + "&cnt=50&appid=adafafa7b4ca2fd642e72286f02918a6";
+     SearchForecast();
+     
+ } )
+ 
+ CreateHistoryButton ()
